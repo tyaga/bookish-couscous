@@ -107,6 +107,7 @@ services:
       - "--httpListenAddr=:8428"
       - "--retentionPeriod=100y"
       - "--selfScrapeInterval=60s"
+      - "--maxLabelsPerTimeseries=200"
     networks:
       - traefik
 
