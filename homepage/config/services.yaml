@@ -16,7 +16,7 @@
             type: homebridge
             url: https://homebridge.atyaga.duckdns.org
             username: tyaga
-            password: derfilka
+            password: admin
 
 - Setup:
     - Traefik:
