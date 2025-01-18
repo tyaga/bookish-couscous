@@ -35,3 +35,8 @@ scrape_configs:
     static_configs:
       - targets: 
         - %{HOME_IP_ADDRESS}:8899
+
+  - job_name: myspeed
+    static_configs:
+      - targets:
+          - %{HOME_IP_ADDRESS}:5216

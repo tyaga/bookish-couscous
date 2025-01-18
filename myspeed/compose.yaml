@@ -22,6 +22,8 @@ services:
       - homepage.showStats=false
       - homepage.widget.type=myspeed
       - homepage.widget.url=https://myspeed.$DOMAIN
+    ports:
+      - 5216:5216
 
     volumes:
       - myspeed:/myspeed/data
