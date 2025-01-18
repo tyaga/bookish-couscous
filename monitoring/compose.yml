@@ -131,7 +131,7 @@ services:
       - ./default.yaml:/etc/grafana/provisioning/dashboards/default.yaml
     privileged: true
     depends_on:
-      - prometheus
+      - victoriametrics
     networks:
       - traefik  
 
