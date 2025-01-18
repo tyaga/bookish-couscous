@@ -1,0 +1,1 @@
+cp variables.dist.env variables.env
