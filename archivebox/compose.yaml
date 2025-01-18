@@ -1,0 +1,82 @@
+services:
+  archivebox:
+    image: archivebox/archivebox:latest
+    container_name: archivebox
+    restart: unless-stopped
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.archivebox.loadbalancer.server.port=8000
+      - traefik.http.routers.archivebox.rule=Host(`archivebox.${DOMAIN}`)
+      - traefik.http.routers.archivebox.entrypoints=websecure
+
+      - homepage.group=Applications
+      - homepage.name=Archivebox
+      - homepage.weight=2
+      - homepage.id=archivebox
+      - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/archivebox.webp
+      - homepage.href=https://archivebox.$DOMAIN/
+      - homepage.siteMonitor=https://archivebox.$DOMAIN/
+      - homepage.ping=archivebox.$DOMAIN
+      - homepage.description=Saved web history
+
+    volumes:
+      - $ABSOLUTE_PATH/data/archivebox:/data
+
+    environment:
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=$ARCHIVEBOX_PASSWORD
+      - ALLOWED_HOSTS=*
+
+      - PUBLIC_INDEX=False
+      - PUBLIC_SNAPSHOTS=False
+      - PUBLIC_ADD_VIEW=True
+      
+      - SAVE_ARCHIVE_DOT_ORG=False
+
+      - SAVE_READABILITY=True
+
+      - SAVE_DOM=False
+      - SAVE_SINGLEFILE=False
+      - SAVE_SCREENSHOT=False
+      - SAVE_MEDIA=False
+      - SAVE_WGET=False
+      - SAVE_MERCURY=False
+      - SAVE_PDF=False
+      - SAVE_WARC=False
+      - SAVE_GIT=False
+      
+      - URL_DENYLIST = r'^http(s)?:\/\/(.+\.)?(duckdns\.org)\/.*$'
+      - SEARCH_BACKEND_ENGINE=sonic
+      - SEARCH_BACKEND_HOST_NAME=sonic
+      - SEARCH_BACKEND_PASSWORD=$ARCHIVEBOX_PASSWORD
+
+      - PUID=1000
+      - PGID=1000
+    networks:
+      - traefik
+
+  sonic:
+    image: archivebox/sonic:latest
+    container_name: sonic
+    restart: unless-stopped
+
+    labels:
+      - homepage.group=Docker
+      - homepage.name=sonic
+      - homepage.showStats=true
+
+    environment:
+      - SEARCH_BACKEND_PASSWORD=$ARCHIVEBOX_PASSWORD
+    volumes:
+      - sonic-data:/var/lib/sonic/store
+    networks:
+      - traefik
+
+volumes:
+  sonic-data:
+    driver: local
+
+networks:
+  traefik:
+    external: true
