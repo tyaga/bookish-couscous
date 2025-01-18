@@ -37,6 +37,7 @@ scrape_configs:
         - %{HOME_IP_ADDRESS}:8899
 
   - job_name: myspeed
+    metrics_path: /api/prometheus/metrics
     static_configs:
       - targets:
           - %{HOME_IP_ADDRESS}:5216
