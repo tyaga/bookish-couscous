@@ -29,7 +29,7 @@ scrape_configs:
     bearer_token: watchtower_token
     static_configs:
       - targets:
-        - %{HOME_IP_ADDRESS}:8080
+        - %{HOME_IP_ADDRESS}:8090
 
   - job_name: traefik
     static_configs:
