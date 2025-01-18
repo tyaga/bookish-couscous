@@ -43,35 +43,72 @@ services:
     networks:
       - traefik  
 
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: prometheus
+#  prometheus:
+#    image: prom/prometheus:latest
+#    container_name: prometheus
+#    restart: unless-stopped
+#
+#    labels:
+#      - homepage.group=Docker
+#      - homepage.name=Prometheus
+#      - homepage.id=prometheus
+#      - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/prometheus.webp
+#      - homepage.server=docker
+#      - homepage.container=prometheus
+#      - homepage.widget.type=prometheus
+#      - homepage.widget.url=http://${HOME_IP_ADDRESS}:9390
+#    ports:
+#      - 9390:9090
+#    environment:
+#      - HOME_IP_ADDRESS=$HOME_IP_ADDRESS
+#      - DOMAIN=$DOMAIN
+#
+#    volumes:
+#      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+#      - prometheus-data:/prometheus
+#    privileged: true
+#    depends_on:
+#      - cadvisor
+#      - node_exporter
+#    networks:
+#      - traefik
+
+  vmagent:
+    image: victoriametrics/vmagent:latest
+    container_name: vmagent
     restart: unless-stopped
 
-    labels: 
-      - homepage.group=Docker
-      - homepage.name=Prometheus
-      - homepage.id=prometheus
-      - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/prometheus.webp
-      - homepage.server=docker
-      - homepage.container=prometheus
-      - homepage.widget.type=prometheus
-      - homepage.widget.url=http://${HOME_IP_ADDRESS}:9390
-    ports:
-      - 9390:9090
     environment:
       - HOME_IP_ADDRESS=$HOME_IP_ADDRESS
       - DOMAIN=$DOMAIN
 
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus-data:/prometheus
-    privileged: true
     depends_on:
+      - victoriametrics
       - cadvisor
       - node_exporter
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - vmagent-data:/vmagentdata
+    command:
+      - "--promscrape.config=/etc/prometheus/prometheus.yml"
+      - "--remoteWrite.url=http://victoriametrics:8428/api/v1/write"
     networks:
-      - traefik  
+      - traefik
+
+  victoriametrics:
+    image: victoriametrics/victoria-metrics:latest
+    container_name: victoriametrics
+    restart: unless-stopped
+
+    volumes:
+      - victoriametrics_data:/storage
+    command:
+      - "--storageDataPath=/storage"
+      - "--httpListenAddr=:8428"
+      - "--retentionPeriod=100y"
+      - "--selfScrapeInterval=60s"
+    networks:
+      - traefik
 
   grafana:
     image: grafana/grafana:latest
@@ -103,8 +140,10 @@ networks:
     external: true
 
 volumes:
-  prometheus-data:
+#  prometheus-data:
   grafana-data:
+  vmagent-data:
+  victoriametrics_data:
 
 # https://grafana.com/grafana/dashboards/1860-node-exporter-full/
 # https://grafana.com/grafana/dashboards/893-main/
