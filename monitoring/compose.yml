@@ -56,9 +56,13 @@ services:
       - homepage.server=docker
       - homepage.container=prometheus
       - homepage.widget.type=prometheus
-      - homepage.widget.url=http://192.168.1.15:9390
+      - homepage.widget.url=http://${HOME_IP_ADDRESS}:9390
     ports:
       - 9390:9090
+    environment:
+      - HOME_IP_ADDRESS=$HOME_IP_ADDRESS
+      - DOMAIN=$DOMAIN
+
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-data:/prometheus

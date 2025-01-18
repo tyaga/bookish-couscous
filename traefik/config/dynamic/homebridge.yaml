@@ -4,9 +4,9 @@ http:
     homebridge:
       loadbalancer:
         servers:
-          - url: "http://192.168.1.15:8581"
+          - url: "http://{{env "HOME_IP_ADDRESS"}}:8581"
   routers:
     homebridge:
       entrypoints: websecure
-      rule: Host(`homebridge.atyaga.duckdns.org`)
+      rule: Host(`homebridge.{{env "DOMAIN"}}`)
       service: homebridge

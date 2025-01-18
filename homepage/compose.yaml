@@ -22,6 +22,7 @@ services:
       - homepage.description=Tyaga's Dashboard
     environment:
       - LOG_TARGETS=stdout
+      - HOMEPAGE_VAR_DOMAIN=$DOMAIN
 
     user: 1000:1000
     group_add: ['971'] # docker

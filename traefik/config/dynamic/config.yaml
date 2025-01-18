@@ -15,12 +15,12 @@ http:
 
   routers:
     traefik-secure:
-      rule: Host(`traefik-dashboard.atyaga.duckdns.org`)
+      rule: Host(`traefik-dashboard.{{env "DOMAIN"}}`)
       entrypoints: websecure
       service: api@internal
       tls:
         certresolver: duckdns
         domains: 
-          - main: atyaga.duckdns.org
+          - main: {{env "DOMAIN"}}
             sans:
-              - "*.atyaga.duckdns.org"
+              - "*.{{env "DOMAIN"}}"

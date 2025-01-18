@@ -8,13 +8,13 @@
         id: homebridge
         weight: 1
         icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/homebridge.webp
-        href: https://homebridge.atyaga.duckdns.org/
+        href: https://homebridge.{{HOMEPAGE_VAR_DOMAIN}}/
         description: Home automation
-        ping: homebridge.atyaga.duckdns.org
-        siteMonitor: https://homebridge.atyaga.duckdns.org/
+        ping: homebridge.{{HOMEPAGE_VAR_DOMAIN}}
+        siteMonitor: https://homebridge.{{HOMEPAGE_VAR_DOMAIN}}/
         widget:
             type: homebridge
-            url: https://homebridge.atyaga.duckdns.org
+            url: https://homebridge.{{HOMEPAGE_VAR_DOMAIN}}
             username: tyaga
             password: admin
 
@@ -23,29 +23,29 @@
         id: traefik
         weight: 1
         icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/traefik.webp
-        href: https://traefik-dashboard.atyaga.duckdns.org/
-        ping: traefik-dashboard.atyaga.duckdns.org
-        siteMonitor: https://traefik-dashboard.atyaga.duckdns.org/
+        href: https://traefik-dashboard.{{HOMEPAGE_VAR_DOMAIN}}/
+        ping: traefik-dashboard.{{HOMEPAGE_VAR_DOMAIN}}
+        siteMonitor: https://traefik-dashboard.{{HOMEPAGE_VAR_DOMAIN}}/
         description: Proxy, domain and SSL management
         server: docker
         container: traefik
         widget:
             type: traefik
-            url: https://traefik-dashboard.atyaga.duckdns.org
+            url: https://traefik-dashboard.{{HOMEPAGE_VAR_DOMAIN}}
 - Monitoring:
     - Grafana: 
         id: grafana
         weight: 1
         icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/grafana.webp
-        href: https://grafana.atyaga.duckdns.org/
+        href: https://grafana.{{HOMEPAGE_VAR_DOMAIN}}/
         description: Metrics dashboard
-        ping: grafana.atyaga.duckdns.org
-        siteMonitor: https://grafana.atyaga.duckdns.org/
+        ping: grafana.{{HOMEPAGE_VAR_DOMAIN}}
+        siteMonitor: https://grafana.{{HOMEPAGE_VAR_DOMAIN}}/
         server: docker
         container: grafana
         widget:
             type: grafana
-            url: https://grafana.atyaga.duckdns.org
+            url: https://grafana.{{HOMEPAGE_VAR_DOMAIN}}
             username: admin
             password: admin
 

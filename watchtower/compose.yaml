@@ -13,7 +13,7 @@ services:
       - homepage.server=docker
       - homepage.container=watchtower
       - homepage.widget.type=watchtower
-      - homepage.widget.url=http://192.168.1.15:8080
+      - homepage.widget.url=http://${HOME_IP_ADDRESS}:8080
       - homepage.widget.key=watchtower_token
 
     environment:

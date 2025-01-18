@@ -2,8 +2,8 @@
 # https://gethomepage.dev/configs/settings/
 
 title: Tyaga's Dashboard
-startUrl: https://atyaga.duckdns.org
-base: https://atyaga.duckdns.org
+startUrl: https://{{HOMEPAGE_VAR_DOMAIN}}
+base: https://{{HOMEPAGE_VAR_DOMAIN}}
 
 theme: light
 language: en

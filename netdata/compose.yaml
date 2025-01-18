@@ -12,7 +12,7 @@ services:
       - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/netdata.webp
       - homepage.href=https://app.netdata.cloud/spaces/tyaga-space/rooms/all-nodes/top
       - homepage.widget.type=netdata
-      - homepage.widget.url=http://192.168.1.15:19999/
+      - homepage.widget.url=http://${HOME_IP_ADDRESS}:19999/
 
     pid: host
     network_mode: host

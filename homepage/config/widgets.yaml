@@ -4,7 +4,7 @@
 - logo:
 
 - glances:
-    url: https://glances.atyaga.duckdns.org
+    url: https://glances.{{HOMEPAGE_VAR_DOMAIN}}
     version: 4
     cpu: true
     mem: true

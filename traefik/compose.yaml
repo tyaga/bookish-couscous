@@ -23,6 +23,8 @@ services:
 
     environment:
       - DUCKDNS_TOKEN=$DUCKDNS_TOKEN
+      - DOMAIN=$DOMAIN
+      - HOME_IP_ADDRESS=$HOME_IP_ADDRESS
 
     labels:
       - traefik.enable=true
