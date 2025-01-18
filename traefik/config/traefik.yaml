@@ -35,7 +35,8 @@ entrypoints:
     asDefault: true
     http:
       tls:
-        certresolver: duckdns
+        #certresolver: duckdns_resolver
+        certresolver: cloudflare_resolver
   web:
     address: ":80"
     http:
@@ -44,15 +45,22 @@ entrypoints:
           to: websecure
           scheme: https
 
-certificatesresolvers: 
-  duckdns: 
+certificatesresolvers:
+  cloudflare_resolver:
     acme:
-      dnschallenge: 
-        provider: duckdns
+      dnschallenge:
+        provider: cloudflare
         disablepropagationcheck: true
         delaybeforecheck: 120
         resolvers: 1.1.1.1:53,1.0.0.1:53
-      email: "<tyaga@github.com>"
-      storage: /letsencrypt/acme.json 
-      caServer: https://acme-v02.api.letsencrypt.org/directory
 
+#  duckdns_resolver:
+#    acme:
+#      dnschallenge:
+#        provider: duckdns
+#        disablepropagationcheck: true
+#        delaybeforecheck: 120
+#        resolvers: 1.1.1.1:53,1.0.0.1:53
+#      email: "<tyaga@github.com>"
+#      storage: /letsencrypt/acme.json
+#      caServer: https://acme-v02.api.letsencrypt.org/directory
