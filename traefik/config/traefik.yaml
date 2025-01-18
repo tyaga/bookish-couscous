@@ -52,8 +52,6 @@ certificatesresolvers:
       storage: /letsencrypt/acme_cf.json
       dnschallenge:
         provider: cloudflare
-#        disablepropagationcheck: true
-#        delaybeforecheck: 10
         resolvers: 1.1.1.1:53,1.0.0.1:53
 #  duckdns:
 #    acme:
