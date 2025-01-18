@@ -19,8 +19,8 @@ http:
       entrypoints: websecure
       service: api@internal
       tls:
-#        certresolver: duckdns_resolver
-        certresolver: cloudflare_resolver
+#        certresolver: duckdns
+        certresolver: cloudflare
         domains:
           - main: {{env "DOMAIN"}}
             sans:
