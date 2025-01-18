@@ -1,0 +1,36 @@
+services:
+  traefik:
+    image: traefik:latest
+    container_name: traefik
+    restart: unless-stopped
+
+    security_opt:
+      - no-new-privileges:true
+
+    ports:
+      - 80:80
+      - 443:443
+      - 8899:8899
+
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      
+      - ./config/traefik.yaml:/etc/traefik/traefik.yaml
+      - ./config/dynamic:/etc/traefik/dynamic
+
+      - $ABSOLUTE_PATH/data/traefik/letsencrypt:/letsencrypt
+
+    environment:
+      - DUCKDNS_TOKEN=$DUCKDNS_TOKEN
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.traefik.entrypoints=web
+      - traefik.http.routers.traefik.middlewares=traefik-auth@file
+      - traefik.http.routers.traefik.rule=Host(`traefik-dashboard.$DOMAIN`)
+
+networks:
+  default:
+    name: traefik
+

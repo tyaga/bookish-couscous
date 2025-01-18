@@ -1,0 +1,15 @@
+{
+    "devices": [
+        {
+            "screen_id": "vgmt5jt2i2gfi2jnc95k716fnq",
+            "name": "YouTube on TV"
+        }
+    ],
+    "apikey": "",
+    "skip_categories": [],
+    "channel_whitelist": [],
+    "skip_count_tracking": true,
+    "mute_ads": true,
+    "skip_ads": true,
+    "auto_play": true
+}

@@ -1,0 +1,26 @@
+---
+http:
+  middlewares: 
+    traefik-auth:
+      basicauth:
+        # admin:admin
+        users: "admin:$$2y$$05$$PIXxStIz4HWKsyd0vZrDZuxsR15XWxRKAq6PmXl5Dn5Oy1zM9luAW"
+    traefik-https-redirect:
+      redirectscheme:
+        scheme: https
+    sslheader:
+      headers:
+        customrequestheaders:
+          X-Forwarded-Proto: https
+
+  routers:
+    traefik-secure:
+      rule: Host(`traefik-dashboard.atyaga.duckdns.org`)
+      entrypoints: websecure
+      service: api@internal
+      tls:
+        certresolver: duckdns
+        domains: 
+          - main: atyaga.duckdns.org
+            sans:
+              - "*.atyaga.duckdns.org"

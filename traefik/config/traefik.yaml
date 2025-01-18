@@ -1,0 +1,58 @@
+---
+
+api:
+  dashboard: true
+  debug: true
+  disabledashboardad: true
+
+log:
+  level: INFO
+
+accesslog: false
+
+metrics:
+  addInternals: true
+  prometheus:
+    entryPoint: metrics
+    addEntryPointsLabels: true
+    addRoutersLabels: true
+    addServicesLabels: true
+
+providers:
+  docker:
+    endpoint: unix:///var/run/docker.sock
+    exposedByDefault: false
+    watch: true
+  file:
+    directory: /etc/traefik/dynamic
+    watch: true
+
+entrypoints: 
+  metrics:
+    address: ":8899"
+  websecure:
+    address: ":443"
+    asDefault: true
+    http:
+      tls:
+        certresolver: duckdns
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entrypoint:
+          to: websecure
+          scheme: https
+
+certificatesresolvers: 
+  duckdns: 
+    acme:
+      dnschallenge: 
+        provider: duckdns
+        disablepropagationcheck: true
+        delaybeforecheck: 120
+        resolvers: 1.1.1.1:53,1.0.0.1:53
+      email: "<tyaga@github.com>"
+      storage: /letsencrypt/acme.json 
+      caServer: https://acme-v02.api.letsencrypt.org/directory
+

@@ -1,0 +1,52 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/services/
+# https://github.com/homarr-labs/dashboard-icons/blob/main/ICONS.md
+
+- Applications: 
+    - Homebridge:
+        id: homebridge
+        weight: 1
+        icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/homebridge.webp
+        href: https://homebridge.atyaga.duckdns.org/
+        description: Home automation
+        ping: homebridge.atyaga.duckdns.org
+        siteMonitor: https://homebridge.atyaga.duckdns.org/
+        widget:
+            type: homebridge
+            url: https://homebridge.atyaga.duckdns.org
+            username: tyaga
+            password: derfilka
+
+- Setup:
+    - Traefik:
+        id: traefik
+        weight: 1
+        icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/traefik.webp
+        href: https://traefik-dashboard.atyaga.duckdns.org/
+        ping: traefik-dashboard.atyaga.duckdns.org
+        siteMonitor: https://traefik-dashboard.atyaga.duckdns.org/
+        description: Proxy, domain and SSL management
+        server: docker
+        container: traefik
+        widget:
+            type: traefik
+            url: https://traefik-dashboard.atyaga.duckdns.org
+- Monitoring:
+    - Grafana: 
+        id: grafana
+        weight: 1
+        icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/grafana.webp
+        href: https://grafana.atyaga.duckdns.org/
+        description: Metrics dashboard
+        ping: grafana.atyaga.duckdns.org
+        siteMonitor: https://grafana.atyaga.duckdns.org/
+        server: docker
+        container: grafana
+        widget:
+            type: grafana
+            url: https://grafana.atyaga.duckdns.org
+            username: admin
+            password: admin
+
+# https://gethomepage.dev/widgets/services/prometheusmetric/

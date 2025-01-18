@@ -1,0 +1,107 @@
+services:
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    restart: unless-stopped
+
+    labels:
+      - homepage.group=Docker
+      - homepage.name=CAdvisor
+      - homepage.id=cadvisor
+      - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/cadvisor.webp
+      - homepage.showStats=true
+
+    volumes:
+      - /:/rootfs:ro,rslave
+      - /var/run:/var/run
+      - /sys:/sys
+      - /var/lib/docker/:/var/lib/docker
+      - /dev/disk/:/dev/disk:ro,rslave
+    privileged: true
+    devices:
+      - /dev/kmsg
+    networks:
+      - traefik
+
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    restart: unless-stopped
+
+    labels:
+      - homepage.group=Docker
+      - homepage.name=Node Exporter
+      - homepage.id=node_exporter
+      - homepage.showStats=true
+      - homepage.icon=mdi-swap-vertical
+
+    command:
+      - --path.rootfs=/host
+    pid: host
+    volumes:
+      - /:/host:ro,rslave
+    networks:
+      - traefik  
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+
+    labels: 
+      - homepage.group=Docker
+      - homepage.name=Prometheus
+      - homepage.id=prometheus
+      - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/prometheus.webp
+      - homepage.server=docker
+      - homepage.container=prometheus
+      - homepage.widget.type=prometheus
+      - homepage.widget.url=http://192.168.1.15:9390
+    ports:
+      - 9390:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    privileged: true
+    depends_on:
+      - cadvisor
+      - node_exporter
+    networks:
+      - traefik  
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.grafana.loadbalancer.server.port=3000
+      - traefik.http.routers.grafana.rule=Host(`grafana.${DOMAIN}`)
+      - traefik.http.routers.grafana.entrypoints=websecure
+
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - DS_PROMETHEUS=prometheus
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+      - ./dashboards/:/var/lib/grafana/dashboards/
+      - ./default.yaml:/etc/grafana/provisioning/dashboards/default.yaml
+    privileged: true
+    depends_on:
+      - prometheus
+    networks:
+      - traefik  
+
+networks:
+  traefik:
+    external: true
+
+volumes:
+  prometheus-data:
+  grafana-data:
+
+# https://grafana.com/grafana/dashboards/1860-node-exporter-full/
+# https://grafana.com/grafana/dashboards/893-main/
+

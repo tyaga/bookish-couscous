@@ -1,0 +1,17 @@
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/bookmarks
+
+---
+- Bookmarks:
+    - Gmail:
+        - href: https://mail.google.com/mail/u/0/#inbox
+          icon: gmail.png
+    - Physical:
+        - href: https://content.pht.space/#/flow-program
+          icon: https://content.pht.space/static/favicon.png
+
+- ITT Bookmarks:
+    - Gitlab:
+        - abbr: GL
+          href: https://gitlab.corp.my.games/
+

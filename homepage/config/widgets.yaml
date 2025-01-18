@@ -1,0 +1,35 @@
+---
+# https://gethomepage.dev/configs/info-widgets/
+
+- logo:
+
+- glances:
+    url: https://glances.atyaga.duckdns.org
+    version: 4
+    cpu: true
+    mem: true
+    cputemp: true
+    uptime: true
+    disk: true
+    expanded: true
+
+- resources:
+    expanded: true
+    disk:
+        - /
+
+- openmeteo:
+    label: Haarlem
+    latitude: 53.709807
+    longitude: 27.953389
+    units: metric
+    provider: openmeteo
+    cache: 10
+    format:
+        maximumFractionDigits: 1
+
+- datetime:
+    text_size: 3xl
+    format:
+        timeStyle: medium
+

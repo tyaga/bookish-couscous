@@ -1,0 +1,37 @@
+
+services:
+  myspeed:
+    image: germannewsmaker/myspeed:latest
+    container_name: myspeed
+    restart: unless-stopped
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.myspeed.loadbalancer.server.port=5216
+      - traefik.http.routers.myspeed.rule=Host(`myspeed.${DOMAIN}`)
+      - traefik.http.routers.myspeed.entrypoints=websecure
+
+      - homepage.group=Monitoring
+      - homepage.name=MySpeed
+      - homepage.href=https://myspeed.$DOMAIN/
+      - homepage.siteMonitor=https://myspeed.$DOMAIN/
+      - homepage.ping=myspeed.$DOMAIN
+      - homepage.id=myspeed
+      - homepage.weight=5
+      - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/myspeed.webp
+      - homepage.showStats=false
+      - homepage.widget.type=myspeed
+      - homepage.widget.url=https://myspeed.$DOMAIN
+
+    volumes:
+      - myspeed:/myspeed/data
+    networks: 
+      - traefik
+
+networks:
+  traefik:
+    external: true
+
+volumes:
+  myspeed:
+

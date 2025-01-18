@@ -1,0 +1,45 @@
+services:
+  scrutiny:
+    image: ghcr.io/analogj/scrutiny:master-omnibus
+    container_name: scrutiny
+    restart: unless-stopped
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.scrutiny.loadbalancer.server.port=8080
+      - traefik.http.routers.scrutiny.rule=Host(`scrutiny.${DOMAIN}`)
+      - traefik.http.routers.scrutiny.entrypoints=websecure
+
+      - homepage.group=Monitoring
+      - homepage.name=Scrutiny
+      - homepage.href=https://scrutiny.$DOMAIN/
+      - homepage.siteMonitor=https://scrutiny.$DOMAIN/
+      - homepage.ping=scrutiny.$DOMAIN
+      - homepage.id=scutiny
+      - homepage.weight=4
+      - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/scrutiny.webp
+      - homepage.showStats=false
+      - homepage.widget.type=scrutiny
+      - homepage.widget.url=https://scrutiny.$DOMAIN
+
+    cap_add:
+      - SYS_RAWIO
+
+    volumes:
+      - $ABSOLUTE_PATH/data/scrutiny:/opt/scrutiny/config
+      - /run/udev:/run/udev:ro
+      - influx-data:/opt/scrutiny/influxdb
+    devices:
+      - "/dev/sda1"
+      - "/dev/sda2"
+      - "/dev/sda3"
+
+    networks:
+      - traefik
+
+volumes:
+  influx-data:
+
+networks:
+  traefik:
+    external: true

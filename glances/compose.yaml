@@ -1,0 +1,34 @@
+services:
+  glances:
+    image: nicolargo/glances:latest
+    container_name: glances
+    restart: unless-stopped
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.glances.loadbalancer.server.port=61208
+      - traefik.http.routers.glances.rule=Host(`glances.${DOMAIN}`)
+      - traefik.http.routers.glances.entrypoints=websecure
+
+      - homepage.group=Monitoring
+      - homepage.name=Glances
+      - homepage.weight=2
+      - homepage.id=glances
+      - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/glances.webp
+      - homepage.href=https://glances.$DOMAIN/
+      - homepage.description=Glances monitoring tool
+      - homepage.siteMonitor=https://glances.$DOMAIN/
+      - homepage.ping=glances.$DOMAIN
+
+    environment:
+      - "GLANCES_OPT=-w"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/os-release:/etc/os-release:ro
+    pid: host
+    networks:
+      - traefik
+
+networks:
+  traefik:
+    external: true

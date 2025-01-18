@@ -1,0 +1,26 @@
+services:
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    restart: unless-stopped
+
+    labels:
+      - homepage.group=Docker
+      - homepage.name=Watchtower
+      - homepage.description=Automatic images update
+      - homepage.id=watchtower
+      - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/watchtower.webp
+      - homepage.server=docker
+      - homepage.container=watchtower
+      - homepage.widget.type=watchtower
+      - homepage.widget.url=http://192.168.1.15:8080
+      - homepage.widget.key=watchtower_token
+
+    environment:
+      - WATCHTOWER_POLL_INTERVAL=86400
+      - WATCHTOWER_HTTP_API_METRICS=true
+      - WATCHTOWER_HTTP_API_TOKEN=watchtower_token
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8080:8080

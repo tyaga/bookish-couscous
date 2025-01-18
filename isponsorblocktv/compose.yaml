@@ -1,0 +1,16 @@
+services:
+  iSponsorBlockTV:
+    image: ghcr.io/dmunozv04/isponsorblocktv:latest
+    container_name: iSponsorBlockTV
+    restart: unless-stopped
+
+    labels:
+      - homepage.group=Applications
+      - homepage.name=iSponsorBlockTV
+      - homepage.id=isponsorblocktv
+      - homepage.weight=4
+      - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/youtube.webp
+      - homepage.description=Skip YouTube sponsorships
+
+    volumes:
+      - ./data:/app/data

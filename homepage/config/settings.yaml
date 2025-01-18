@@ -1,0 +1,55 @@
+---
+# https://gethomepage.dev/configs/settings/
+
+title: Tyaga's Dashboard
+startUrl: https://atyaga.duckdns.org
+base: https://atyaga.duckdns.org
+
+theme: light
+language: en
+color: white
+
+disableCollapse: false
+fiveColumns: true
+groupsInitiallyCollapsed: false
+useEqualHeights: false
+headerStyle: boxedWidgets
+showStats: false
+statusStyle: dot
+hideVersion: true
+hideErrors: true
+
+quicklaunch:
+    searchDescriptions: true
+    hideInternetSearch: false
+    showSearchSuggestions: true
+    hideVisitURL: false
+    provider: google
+
+layout:
+    Bookmarks:
+        tab: Personal
+        header: false
+        iconsOnly: true
+        style: row
+        columns: 5
+    ITT Bookmarks:
+        tab: Work
+        header: false
+        style: row
+        columns: 5
+    Applications:
+        tab: Personal
+        icon: mdi-application
+    Setup:
+        tab: Personal
+        icon: mdi-cog
+    Monitoring:
+        tab: Personal
+        icon: mdi-chart-bar-stacked
+    Docker:
+        tab: Personal
+        icon: https://cdn.jsdelivr.net/gh/selfhst/icons/webp/docker.webp
+        initiallyCollapsed: false
+        style: row
+        columns: 5
