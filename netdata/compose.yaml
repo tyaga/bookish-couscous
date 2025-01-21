@@ -5,6 +5,7 @@ services:
     restart: unless-stopped
 
     labels:
+      - io.portainer.accesscontrol.public=true
       - homepage.group=Monitoring
       - homepage.weight=6
       - homepage.name=NetData

@@ -17,7 +17,7 @@ headerStyle: boxedWidgets
 showStats: false
 statusStyle: dot
 hideVersion: true
-hideErrors: true
+hideErrors: false
 
 quicklaunch:
     searchDescriptions: true
@@ -50,6 +50,6 @@ layout:
     Docker:
         tab: Personal
         icon: https://cdn.jsdelivr.net/gh/selfhst/icons/webp/docker.webp
-        initiallyCollapsed: false
+        initiallyCollapsed: true
         style: row
         columns: 5

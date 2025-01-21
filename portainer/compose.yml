@@ -1,0 +1,39 @@
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.portainer.loadbalancer.server.port=9000
+      - traefik.http.routers.portainer.rule=Host(`portainer.${DOMAIN}`)
+      - traefik.http.routers.portainer.entrypoints=websecure
+
+      - homepage.group=Setup
+      - homepage.weight=2
+      - homepage.name=Portainer
+      - homepage.id=portainer
+      - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/portainer.webp
+      - homepage.href=https://portainer.$DOMAIN/#!/1/docker/stacks
+      - homepage.description=Running docker containers
+
+      - homepage.widget.type=portainer
+      - homepage.widget.url=https://portainer.${DOMAIN}
+      - homepage.widget.env=1
+      - homepage.widget.key=ptr_XrLYe78nE7ufo9WXJM3EDQn7CrlakNNdxZmGXXJIs8w=
+
+    command: -H unix:///var/run/docker.sock --no-analytics --admin-password $$2y$$05$$PIXxStIz4HWKsyd0vZrDZuxsR15XWxRKAq6PmXl5Dn5Oy1zM9luAW
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+    networks:
+      - traefik  
+
+volumes:
+  portainer_data:
+
+networks:
+  traefik:
+    external: true

@@ -22,16 +22,36 @@ services:
       - $ABSOLUTE_PATH/data/traefik/letsencrypt:/letsencrypt
 
     environment:
-      - CF_DNS_API_TOKEN=$CF_DNS_API_TOKEN
-      - DUCKDNS_TOKEN=$DUCKDNS_TOKEN
       - DOMAIN=$DOMAIN
       - HOME_IP_ADDRESS=$HOME_IP_ADDRESS
+      - CF_DNS_API_TOKEN=$CF_DNS_API_TOKEN
 
     labels:
       - traefik.enable=true
       - traefik.http.routers.traefik.entrypoints=web
       - traefik.http.routers.traefik.middlewares=traefik-auth@file
       - traefik.http.routers.traefik.rule=Host(`traefik-dashboard.$DOMAIN`)
+
+  traefik-certs-dumper:
+    image: ldez/traefik-certs-dumper:latest
+    container_name: traefik-certs-dumper
+    restart: unless-stopped
+
+    labels:
+      traefik.enable: false
+
+    entrypoint: sh -c '
+      while ! [ -e /data/acme_cf.json ] || ! [ `jq ".[] | .Certificates | length" /data/acme_cf.json | jq -s "add" ` != 0 ]; do
+        sleep 10 ; done
+        && traefik-certs-dumper file --version v2 --source /data/acme_cf.json --dest /out --domain-subdir=true;
+      mv /out/l.atyaga.ru/certificate.crt /out/l.atyaga.ru.crt;
+      mv /out/l.atyaga.ru/privatekey.key /out/l.atyaga.ru.key;
+      rm -rf /out/l.atyaga.ru /out/private;
+      sleep 3600;'
+    volumes:
+      - /etc/cockpit/ws-certs.d:/out
+      - $ABSOLUTE_PATH/data/traefik/letsencrypt:/data:ro
+
 
 networks:
   default:

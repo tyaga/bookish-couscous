@@ -11,7 +11,7 @@ services:
       - traefik.http.routers.dockge.entrypoints=websecure
 
       - homepage.group=Setup
-      - homepage.weight=2
+      - homepage.weight=5
       - homepage.name=Dockge
       - homepage.id=dockge
       - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/dockge.webp

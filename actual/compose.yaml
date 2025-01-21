@@ -1,0 +1,82 @@
+services:
+  actual_server:
+    image: docker.io/actualbudget/actual-server:latest
+    container_name: actual-server
+    restart: unless-stopped
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.actual.loadbalancer.server.port=5006
+      - traefik.http.routers.actual.rule=Host(`actual.${DOMAIN}`)
+      - traefik.http.routers.actual.entrypoints=websecure
+
+      - homepage.group=Applications
+      - homepage.weight=6
+      - homepage.name=Actual
+      - homepage.id=actual
+      - homepage.siteMonitor=https://actual.$DOMAIN/
+      - homepage.ping=actual.$DOMAIN
+      - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/actual-budget.webp
+      - homepage.href=https://actual.$DOMAIN/
+      - homepage.description=Budgeting
+
+#    ports:
+#      - '5006:5006'
+    environment:
+      - ACTUAL_PORT=5006
+      - ACTUAL_UPLOAD_FILE_SYNC_SIZE_LIMIT_MB=20
+      - ACTUAL_UPLOAD_FILE_SIZE_LIMIT_MB=20
+      - ACTUAL_UPLOAD_SYNC_ENCRYPTED_FILE_SYNC_SIZE_LIMIT_MB=50
+  
+    volumes:
+      - actual-data:/data
+    networks:
+      - traefik
+
+  actual-ai:
+    image: docker.io/sakowicz/actual-ai:latest
+    container_name: actual-ai
+    restart: unless-stopped
+
+    environment:
+      ACTUAL_SERVER_URL: http://actual-server:5006
+      ACTUAL_PASSWORD: $ACTUAL_PASSWORD
+      ACTUAL_BUDGET_ID: $ACTUAL_BUDGET_ID
+      CLASSIFICATION_SCHEDULE_CRON: 0 4 * * * 
+      CLASSIFY_ON_STARTUP: true
+      SYNC_ACCOUNTS_BEFORE_CLASSIFY: true
+      LLM_PROVIDER: openai
+      OPENAI_API_KEY: ${ACTUAL_OPENAI_API_KEY}
+      OPENAI_MODEL: "gpt-4o"
+      NOT_GUESSED_TAG: "#actual-ai-miss"
+      GUESSED_TAG: "#actual-ai"
+      PROMPT_TEMPLATE: >
+        I want to categorize the given bank transactions into the following categories:
+        {{#each categoryGroups}}
+        {{#each categories}}
+        * {{name}} ({{../name}}) (ID: "{{id}}")
+        {{/each}}
+        {{/each}}
+        Please categorize the following transaction:
+        * Amount: {{amount}}
+        * Type: {{type}}
+        {{#if description}}
+        * Description: {{description}}
+        {{/if}}
+        {{#if payee}}
+        * Payee: {{payee}}
+        {{^}}
+        * Payee: {{importedPayee}}
+        {{/if}}
+        ANSWER BY A CATEGORY ID. Do not guess, if you don't know the answer, return "uncategorized".
+
+    networks:
+      - traefik
+
+networks:
+  traefik:
+    external: true    
+
+volumes:
+  actual-data:
+    driver: local

@@ -32,6 +32,14 @@
         widget:
             type: traefik
             url: https://traefik-dashboard.{{HOMEPAGE_VAR_DOMAIN}}
+    - Cockpit:
+        id: cockpit
+        weight: 3
+        icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/cockpit.webp
+        href: https://{{HOMEPAGE_VAR_DOMAIN}}:9090/
+        siteMonitor: https://{{HOMEPAGE_VAR_DOMAIN}}:9090/
+        description: Graphical interface for the server
+
 - Monitoring:
     - Grafana: 
         id: grafana
