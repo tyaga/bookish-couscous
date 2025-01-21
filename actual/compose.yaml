@@ -20,8 +20,6 @@ services:
       - homepage.href=https://actual.$DOMAIN/
       - homepage.description=Budgeting
 
-#    ports:
-#      - '5006:5006'
     environment:
       - ACTUAL_PORT=5006
       - ACTUAL_UPLOAD_FILE_SYNC_SIZE_LIMIT_MB=20
