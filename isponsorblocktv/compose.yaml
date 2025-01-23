@@ -5,10 +5,10 @@ services:
     restart: unless-stopped
 
     labels:
-      - homepage.group=Applications
+      - homepage.group=Media
       - homepage.name=iSponsorBlockTV
       - homepage.id=isponsorblocktv
-      - homepage.weight=4
+      - homepage.weight=2
       - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/youtube.webp
       - homepage.description=Skip YouTube sponsorships
 

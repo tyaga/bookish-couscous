@@ -6,7 +6,7 @@
 - Applications: 
     - Homebridge:
         id: homebridge
-        weight: 1
+        weight: 2
         icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/homebridge.webp
         href: https://homebridge.{{HOMEPAGE_VAR_DOMAIN}}/
         description: Home automation
@@ -17,6 +17,8 @@
             url: https://homebridge.{{HOMEPAGE_VAR_DOMAIN}}
             username: tyaga
             password: admin
+- Media:
+    - Emby: 
 
 - Setup:
     - Traefik:

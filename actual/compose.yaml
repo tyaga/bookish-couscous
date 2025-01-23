@@ -11,7 +11,7 @@ services:
       - traefik.http.routers.actual.entrypoints=websecure
 
       - homepage.group=Applications
-      - homepage.weight=6
+      - homepage.weight=3
       - homepage.name=Actual
       - homepage.id=actual
       - homepage.siteMonitor=https://actual.$DOMAIN/
@@ -36,13 +36,19 @@ services:
     container_name: actual-ai
     restart: unless-stopped
 
+    labels:
+      - homepage.group=Containers
+      - homepage.name=Actual-ai
+      - homepage.id=actual-ai
+      - homepage.showStats=true
+
     environment:
       ACTUAL_SERVER_URL: http://actual-server:5006
       ACTUAL_PASSWORD: $ACTUAL_PASSWORD
       ACTUAL_BUDGET_ID: $ACTUAL_BUDGET_ID
       CLASSIFICATION_SCHEDULE_CRON: 0 4 * * * 
       CLASSIFY_ON_STARTUP: true
-      SYNC_ACCOUNTS_BEFORE_CLASSIFY: true
+      SYNC_ACCOUNTS_BEFORE_CLASSIFY: false
       LLM_PROVIDER: openai
       OPENAI_API_KEY: ${ACTUAL_OPENAI_API_KEY}
       OPENAI_MODEL: "gpt-4o"

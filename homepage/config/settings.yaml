@@ -14,8 +14,10 @@ fiveColumns: true
 groupsInitiallyCollapsed: false
 useEqualHeights: false
 headerStyle: boxedWidgets
+
 showStats: false
 statusStyle: dot
+
 hideVersion: true
 hideErrors: false
 
@@ -41,15 +43,19 @@ layout:
     Applications:
         tab: Personal
         icon: mdi-application
+    Media:
+        tab: Personal
+        icon: mdi-media
     Setup:
         tab: Personal
         icon: mdi-cog
     Monitoring:
         tab: Personal
         icon: mdi-chart-bar-stacked
-    Docker:
+    Containers:
         tab: Personal
-        icon: https://cdn.jsdelivr.net/gh/selfhst/icons/webp/docker.webp
         initiallyCollapsed: true
+        icon: https://cdn.jsdelivr.net/gh/selfhst/icons/webp/docker.webp
+        header: true
         style: row
-        columns: 5
+        columns: 7

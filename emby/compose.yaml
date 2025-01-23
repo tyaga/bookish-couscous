@@ -1,0 +1,45 @@
+services:
+  emby:
+    image: emby/embyserver
+    container_name: embyserver
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.emby.loadbalancer.server.port=8096
+      - traefik.http.routers.emby.rule=Host(`emby.${DOMAIN}`)
+      - traefik.http.routers.emby.entrypoints=websecure
+
+      - homepage.group=Media
+      - homepage.name=Emby
+      - homepage.weight=1
+      - homepage.id=emby
+      - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/emby.webp
+      - homepage.href=https://emby.$DOMAIN/
+      - homepage.description=Home media server
+      - homepage.siteMonitor=https://emby.$DOMAIN/
+      - homepage.ping=emby.$DOMAIN
+
+      - homepage.widget.type=emby
+      - homepage.widget.url=https://emby.$DOMAIN
+      - homepage.widget.key=171aeb55373347a9a839a1244d8ac401
+      - homepage.widget.enableNowPlaying=true
+      - homepage.widget.enableUser=false
+      - homepage.widget.enableBlocks=true
+      - homepage.widget.showEpisodeNumber=true
+      - homepage.widget.expandOneStreamToTwoRows=false
+
+    environment:
+      - UID=1000
+      - GID=1000
+    volumes:
+      - $ABSOLUTE_PATH/data/emby:/config
+      - /home/tyaga/media:/mnt/share1 # Media directory
+    ports:
+      - 8096:8096 # HTTP port
+
+    networks:
+      - traefik
+
+networks:
+  traefik:
+    external: true

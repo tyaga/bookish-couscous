@@ -13,7 +13,7 @@ services:
       - homepage.group=Applications
       - homepage.name=Homepage
       - homepage.id=homepage
-      - homepage.weight=3
+      - homepage.weight=1
       - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/homepage.webp
       - homepage.href=https://$DOMAIN/
       - homepage.siteMonitor=https://$DOMAIN/

@@ -12,7 +12,7 @@ services:
 
       - homepage.group=Applications
       - homepage.name=Archivebox
-      - homepage.weight=2
+      - homepage.weight=4
       - homepage.id=archivebox
       - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/archivebox.webp
       - homepage.href=https://archivebox.$DOMAIN/
@@ -62,7 +62,7 @@ services:
     restart: unless-stopped
 
     labels:
-      - homepage.group=Docker
+      - homepage.group=Containers
       - homepage.name=sonic
       - homepage.showStats=true
 

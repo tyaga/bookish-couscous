@@ -9,6 +9,12 @@
     - Physical:
         - href: https://content.pht.space/#/flow-program
           icon: https://content.pht.space/static/favicon.png
+    - YouTube:
+        - href: https://youtube.com/
+          icon: youtube.png
+    - Bunq:
+        - href: https://web.bunq.com/user/7834557
+          icon: https://web.bunq.com/assets/favicon-BjGKPVkG.ico
 
 - ITT Bookmarks:
     - Gitlab:

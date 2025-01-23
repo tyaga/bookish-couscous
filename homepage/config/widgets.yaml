@@ -11,10 +11,10 @@
     cputemp: true
     uptime: true
     disk: true
-    expanded: true
+    expanded: false
 
 - resources:
-    expanded: true
+    expanded: false
     disk:
         - /
 
